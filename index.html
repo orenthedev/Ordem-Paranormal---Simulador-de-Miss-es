@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Missões - Ordem Paranormal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 Simulador de Missões - Ordem Paranormal</h1>
+            <p>FVTT Mission Simulator</p>
+        </header>
+
+        <main>
+            <!-- Painel de Configuração -->
+            <section class="setup-panel">
+                <h2>⚙️ Configuração da Missão</h2>
+                
+                <!-- Agentes -->
+                <div class="config-section">
+                    <h3>👥 Agentes</h3>
+                    <div class="agents-list" id="agentsList">
+                        <p class="empty-state">Nenhum agente adicionado</p>
+                    </div>
+
+                    <div class="add-agent-options">
+                        <button class="btn btn-secondary" onclick="showAddAgentForm()">➕ Adicionar Agente Personalizado</button>
+                        <button class="btn btn-secondary" onclick="showRandomAgentForm()">🎲 Adicionar Agente Aleatório</button>
+                    </div>
+
+                    <!-- Form Agente Personalizado -->
+                    <div id="customAgentForm" class="form-container hidden">
+                        <h4>Novo Agente Personalizado</h4>
+                        <input type="text" id="agentName" placeholder="Nome do Agente" maxlength="20">
+                        <select id="agentClass">
+                            <option value="">Selecionar Classe</option>
+                            <option value="Combatente">⚔️ Combatente</option>
+                            <option value="Especialista">🔍 Especialista</option>
+                            <option value="Ocultista">🌙 Ocultista</option>
+                        </select>
+                        <input type="number" id="agentNEX" placeholder="NEX (5, 10, 15...)" min="5" step="5">
+                        <button class="btn btn-primary" onclick="addCustomAgent()">Adicionar</button>
+                        <button class="btn btn-secondary" onclick="closeAgentForm()">Cancelar</button>
+                    </div>
+
+                    <!-- Form Agente Aleatório -->
+                    <div id="randomAgentForm" class="form-container hidden">
+                        <h4>Gerar Agente Aleatório</h4>
+                        <select id="randomAgentClass">
+                            <option value="">Classe Aleatória</option>
+                            <option value="Combatente">⚔️ Combatente</option>
+                            <option value="Especialista">🔍 Especialista</option>
+                            <option value="Ocultista">🌙 Ocultista</option>
+                        </select>
+                        <input type="number" id="randomAgentNEX" placeholder="NEX Máximo (ex: 50)" min="5" step="5">
+                        <button class="btn btn-primary" onclick="addRandomAgent()">Gerar</button>
+                        <button class="btn btn-secondary" onclick="closeRandomAgentForm()">Cancelar</button>
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                <div class="config-section">
+                    <h3>🗺️ Configuração do Grid</h3>
+                    <div class="grid-options">
+                        <label>
+                            <input type="radio" name="gridType" value="random" checked onchange="updateGridType()"> Aleatório
+                        </label>
+                        <label>
+                            <input type="radio" name="gridType" value="custom" onchange="updateGridType()"> Personalizado
+                        </label>
+                    </div>
+
+                    <div id="gridCustomOptions" class="hidden">
+                        <input type="number" id="gridMin" placeholder="Tamanho Mínimo (ex: 5)" min="3" value="5">
+                        <input type="number" id="gridMax" placeholder="Tamanho Máximo (ex: 12)" min="3" value="12">
+                        <p class="info-text">Será gerado um grid aleatório entre [Mínimo] por [Máximo]</p>
+                    </div>
+
+                    <div class="clues-config">
+                        <label>Pistas Aleatórias: <span id="cluesCount">Será aleatório</span></label>
+                    </div>
+                </div>
+
+                <!-- Inimigo -->
+                <div class="config-section">
+                    <h3>👹 Seleção do Inimigo</h3>
+                    <select id="enemySelect">
+                        <option value="">Selecionar Inimigo</option>
+                        <option value="blood-zombie">🧟 Zumbi de Sangue (VD: 20)</option>
+                        <option value="anarchic">⚡ Anárquico (VD: 20)</option>
+                        <option value="shade">👻 Vulto (VD: 40)</option>
+                        <option value="bestial-zombie">🧟‍♂️ Zumbi de Sangue Bestial (VD: 100)</option>
+                        <option value="uncontrolled-anarchic">⚡ Anárquico Descontrolado (VD: 120)</option>
+                        <option value="beheaded">☠️ Degolificada (VD: 320)</option>
+                        <option value="death-god">💀 Deus da Morte (VD: 400)</option>
+                    </select>
+                </div>
+
+                <div class="start-mission">
+                    <button class="btn btn-large btn-success" onclick="startMission()">🚀 INICIAR MISSÃO</button>
+                </div>
+            </section>
+
+            <!-- Painel de Simulação -->
+            <section id="simulationPanel" class="simulation-panel hidden">
+                <div class="simulation-header">
+                    <h2>🎬 Simulação em Andamento</h2>
+                    <button class="btn btn-secondary" onclick="returnToSetup()">↩️ Voltar</button>
+                </div>
+
+                <div class="simulation-content">
+                    <!-- Info de Missão -->
+                    <div class="mission-info">
+                        <h3>Informações da Missão</h3>
+                        <div class="info-grid">
+                            <div class="info-box">
+                                <span class="label">Turno Atual:</span>
+                                <span class="value" id="currentTurn">1</span>
+                            </div>
+                            <div class="info-box">
+                                <span class="label">Pistas Encontradas:</span>
+                                <span class="value"><span id="cluesFound">0</span>/<span id="totalClues">0</span></span>
+                            </div>
+                            <div class="info-box">
+                                <span class="label">Inimigo:</span>
+                                <span class="value" id="enemyName">-</span>
+                            </div>
+                            <div class="info-box">
+                                <span class="label">Status:</span>
+                                <span class="value" id="missionStatus">Preparando...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mapa e Ações -->
+                    <div class="simulation-main">
+                        <!-- Mapa -->
+                        <div class="map-container">
+                            <h3>🗺️ Mapa</h3>
+                            <div id="gameMap" class="game-map"></div>
+                            <div class="map-legend">
+                                <div class="legend-item">
+                                    <span class="legend-cell agent">A</span> Agente
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-cell enemy">🔴</span> Inimigo
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-cell clue">?</span> Pista
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-cell wall">█</span> Parede
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ações e Status -->
+                        <div class="actions-panel">
+                            <h3>🎮 Ações</h3>
+                            
+                            <!-- Status dos Agentes -->
+                            <div class="agents-status">
+                                <h4>👥 Agentes em Campo</h4>
+                                <div id="agentsStatusList"></div>
+                            </div>
+
+                            <!-- Controles de Turno -->
+                            <div class="turn-controls">
+                                <h4>Turno</h4>
+                                <button class="btn btn-large btn-success" onclick="executeTurn()">▶️ Próximo Turno</button>
+                                <button class="btn btn-secondary" onclick="showTurnDetails()">📋 Detalhes do Turno</button>
+                            </div>
+
+                            <!-- Status do Inimigo -->
+                            <div class="enemy-status">
+                                <h4>👹 Inimigo</h4>
+                                <div id="enemyStatusBox"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Histórico de Turnos -->
+                    <div class="turn-history">
+                        <h3>📜 Histórico de Turnos</h3>
+                        <div id="turnLog" class="turn-log"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Painel de Resultado -->
+            <section id="resultPanel" class="result-panel hidden">
+                <div class="result-content">
+                    <h2 id="resultTitle">Missão Finalizada</h2>
+                    <p id="resultMessage"></p>
+                    
+                    <div class="final-stats">
+                        <h3>📊 Estatísticas Finais</h3>
+                        <div id="finalStats"></div>
+                    </div>
+
+                    <button class="btn btn-large btn-success" onclick="returnToSetup()">🔄 Nova Missão</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
