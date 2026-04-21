@@ -1,0 +1,688 @@
+:root {
+    --primary-purple: #7B2CBF;
+    --dark-purple: #5A189A;
+    --light-purple: #C77DFF;
+    --white: #FFFFFF;
+    --red: #FF006E;
+    --blue: #0096FF;
+    --green: #06D6A0;
+    --dark-bg: #240046;
+    --grid-bg: #381E72;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--primary-purple);
+    color: var(--white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--dark-purple), var(--primary-purple));
+    border-radius: 10px;
+    border: 2px solid var(--light-purple);
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(199, 125, 255, 0.5);
+}
+
+header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+main {
+    display: grid;
+    gap: 20px;
+}
+
+/* Seções */
+.setup-panel, .simulation-panel, .result-panel {
+    background-color: var(--grid-bg);
+    border: 2px solid var(--light-purple);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 0 20px rgba(123, 44, 191, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Configuração */
+.config-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-left: 4px solid var(--light-purple);
+    border-radius: 5px;
+}
+
+.config-section h3 {
+    margin-bottom: 15px;
+    color: var(--light-purple);
+    font-size: 1.2em;
+}
+
+/* Formulários */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--dark-bg);
+    border: 1px solid var(--light-purple);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 10px rgba(6, 214, 160, 0.3);
+}
+
+/* Botões */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background-color: var(--light-purple);
+    color: var(--dark-bg);
+    width: 100%;
+}
+
+.btn-secondary {
+    background-color: var(--primary-purple);
+    color: var(--white);
+    border: 1px solid var(--light-purple);
+    width: 100%;
+}
+
+.btn-success {
+    background-color: var(--green);
+    color: var(--dark-bg);
+}
+
+.btn-large {
+    padding: 15px 30px;
+    font-size: 1.1em;
+}
+
+.btn-secondary:hover {
+    background-color: var(--dark-purple);
+}
+
+.btn-success:hover {
+    background-color: #04b896;
+}
+
+/* Lista de Agentes */
+.agents-list {
+    margin-bottom: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.agent-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: rgba(199, 125, 255, 0.1);
+    border: 1px solid var(--light-purple);
+    border-radius: 5px;
+    word-break: break-word;
+}
+
+.agent-info {
+    flex: 1;
+}
+
+.agent-name {
+    font-weight: bold;
+    color: var(--green);
+}
+
+.agent-details {
+    font-size: 0.9em;
+    color: #AAAAAA;
+}
+
+.btn-remove {
+    background-color: var(--red);
+    color: var(--white);
+    padding: 5px 10px;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    color: #888888;
+    font-style: italic;
+}
+
+/* Opções de Grid */
+.grid-options {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.grid-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 1.05em;
+}
+
+.grid-options input[type="radio"] {
+    width: auto;
+    margin: 0;
+}
+
+.info-text {
+    font-size: 0.9em;
+    color: #CCCCCC;
+    margin-top: 10px;
+}
+
+/* Simulação */
+.simulation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--light-purple);
+}
+
+.simulation-header h2 {
+    color: var(--light-purple);
+}
+
+.mission-info {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.mission-info h3 {
+    margin-bottom: 15px;
+    color: var(--light-purple);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.info-box {
+    background-color: rgba(199, 125, 255, 0.1);
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid var(--light-purple);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-box .label {
+    font-weight: bold;
+    color: var(--light-purple);
+}
+
+.info-box .value {
+    font-size: 1.2em;
+    color: var(--green);
+    font-weight: bold;
+}
+
+/* Simulação Main */
+.simulation-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+    .simulation-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mapa */
+.map-container {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.map-container h3 {
+    margin-bottom: 15px;
+    color: var(--light-purple);
+}
+
+.game-map {
+    display: inline-block;
+    background-color: var(--dark-bg);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.map-row {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 2px;
+}
+
+.map-cell {
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--light-purple);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.map-cell:hover {
+    transform: scale(1.05);
+}
+
+.map-cell.empty {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.map-cell.wall {
+    background-color: var(--blue);
+    border-color: var(--blue);
+}
+
+.map-cell.agent {
+    background-color: rgba(6, 214, 160, 0.3);
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.map-cell.enemy {
+    background-color: rgba(255, 0, 110, 0.3);
+    border-color: var(--red);
+    color: var(--red);
+    font-size: 1.2em;
+}
+
+.map-cell.clue {
+    background-color: rgba(199, 125, 255, 0.3);
+    border-color: var(--light-purple);
+    color: var(--light-purple);
+}
+
+.map-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-cell {
+    width: 25px;
+    height: 25px;
+    border: 1px solid var(--light-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.legend-cell.agent {
+    background-color: rgba(6, 214, 160, 0.3);
+    color: var(--green);
+    border-color: var(--green);
+}
+
+.legend-cell.enemy {
+    background-color: rgba(255, 0, 110, 0.3);
+    color: var(--red);
+    border-color: var(--red);
+}
+
+.legend-cell.clue {
+    background-color: rgba(199, 125, 255, 0.3);
+    color: var(--light-purple);
+    border-color: var(--light-purple);
+}
+
+.legend-cell.wall {
+    background-color: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+}
+
+/* Painel de Ações */
+.actions-panel {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.actions-panel h3, .actions-panel h4 {
+    color: var(--light-purple);
+    margin-bottom: 12px;
+}
+
+.agents-status {
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: rgba(199, 125, 255, 0.05);
+    border-left: 3px solid var(--green);
+    border-radius: 3px;
+}
+
+.agents-status h4 {
+    margin-bottom: 10px;
+}
+
+#agentsStatusList {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.agent-status-item {
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--green);
+    border-radius: 3px;
+    font-size: 0.95em;
+}
+
+.agent-status-name {
+    font-weight: bold;
+    color: var(--green);
+}
+
+.status-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.status-item {
+    flex: 1;
+}
+
+.status-label {
+    font-weight: bold;
+    color: var(--light-purple);
+}
+
+.status-value {
+    color: var(--white);
+}
+
+.turn-controls {
+    margin: 20px 0;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--green);
+    border-radius: 3px;
+}
+
+.turn-controls h4 {
+    margin-bottom: 10px;
+}
+
+.turn-controls button {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.turn-controls button:last-child {
+    margin-bottom: 0;
+}
+
+.enemy-status {
+    padding: 12px;
+    background-color: rgba(255, 0, 110, 0.05);
+    border-left: 3px solid var(--red);
+    border-radius: 3px;
+}
+
+.enemy-status h4 {
+    margin-bottom: 10px;
+}
+
+#enemyStatusBox {
+    font-size: 0.95em;
+}
+
+.enemy-status-item {
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.enemy-status-label {
+    color: var(--light-purple);
+}
+
+.enemy-status-value {
+    color: var(--red);
+    font-weight: bold;
+}
+
+/* Histórico */
+.turn-history {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.turn-history h3 {
+    color: var(--light-purple);
+    margin-bottom: 15px;
+}
+
+.turn-log {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.turn-entry {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(199, 125, 255, 0.1);
+    border-left: 3px solid var(--light-purple);
+    border-radius: 3px;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.turn-number {
+    font-weight: bold;
+    color: var(--green);
+    margin-bottom: 5px;
+}
+
+.turn-text {
+    color: var(--white);
+}
+
+/* Resultado */
+.result-panel {
+    text-align: center;
+}
+
+.result-content {
+    padding: 40px;
+}
+
+#resultTitle {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: var(--light-purple);
+    text-shadow: 0 0 10px rgba(199, 125, 255, 0.5);
+}
+
+#resultMessage {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.final-stats {
+    text-align: left;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.final-stats h3 {
+    color: var(--light-purple);
+    margin-bottom: 15px;
+}
+
+.stat-line {
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: rgba(199, 125, 255, 0.1);
+    border-left: 3px solid var(--green);
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-label {
+    color: var(--light-purple);
+    font-weight: bold;
+}
+
+.stat-value {
+    color: var(--green);
+    font-weight: bold;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--light-purple);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--green);
+}
+
+/* Form Container */
+.form-container {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--light-purple);
+    border-radius: 5px;
+}
+
+.form-container h4 {
+    margin-bottom: 12px;
+    color: var(--light-purple);
+}
+
+.add-agent-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.add-agent-options button {
+    flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .map-cell {
+        width: 30px;
+        height: 30px;
+        font-size: 0.85em;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .add-agent-options {
+        flex-direction: column;
+    }
+
+    .add-agent-options button {
+        width: 100%;
+    }
+}
